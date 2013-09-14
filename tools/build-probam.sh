@@ -26,7 +26,7 @@ if [ ! -d ".repo" ]; then
 	exit 1
 fi
 if [ ! -d "vendor/probam" ]; then
-	echo -e ${red}"No vendor/probam directory found.  Is this a PAC build tree?"${txtrst}
+	echo -e ${red}"No vendor/probam directory found.  Is this a ProBam build tree?"${txtrst}
 	exit 1
 fi
 
@@ -109,7 +109,7 @@ rm -rf out/target/product/$device/system/
 # lunch device
 echo -e ""
 echo -e ${bldblu}"Lunching device"${txtrst}
-lunch "pac_$device-userdebug";
+lunch "probam_$device-userdebug";
 
 echo -e ""
 echo -e ${bldblu}"Starting compilation"${txtrst}
