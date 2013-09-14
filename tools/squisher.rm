@@ -1,8 +1,11 @@
 system/app/CMUpdater.apk
-system/app/CMWallpapers.apk
 system/app/PinyinIME.apk
+system/app/GooglePacman.apk
+system/app/ParanoidWallpapers.apk
 system/etc/init.d/00banner
+system/app/SwagPapers.apk
 system/media/video/AndroidInSpace.240p.mp4
 system/media/video/AndroidInSpace.480p.mp4
 system/media/video/Sunset.240p.mp4
 system/media/video/Sunset.480p.mp4
+system/media/bootanimation.zip

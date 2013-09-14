@@ -1,6 +1,6 @@
 [
     {
-        "account":      "CyanogenMod",
+        "account":      "ICJm7-cm102",
         "repository":   "android_device_htc_m7-common",
         "target_path":  "device/htc/m7-common",
         "revision":     "cm-10.2"
@@ -18,7 +18,7 @@
         "revision":     "cm-10.2"
     },
     {
-        "account":      "CyanogenMod",
+        "account":      "ICJm7-cm102",
         "repository":   "android_kernel_htc_m7",
         "target_path":  "kernel/htc/m7",
         "revision":     "cm-10.2"

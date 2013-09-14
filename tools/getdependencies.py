@@ -91,7 +91,7 @@ def add_to_manifest(repositories):
 
 def fetch_dependencies(device):
 #    print 'Looking for PAC product dependencies'
-    dependencies_path = 'vendor/pac/dependencies/' + device + '.dependencies'
+    dependencies_path = 'vendor/probam/dependencies/' + device + '.dependencies'
 
     syncable_repos = []
 

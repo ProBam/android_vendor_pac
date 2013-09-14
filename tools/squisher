@@ -1,10 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Squish a CM otapackage for distribution
 # cyanogen
 #
-
-. ${ANDROID_BUILD_TOP}/vendor/pac/tools/colors
 
 OUT_TARGET_HOST=`uname -a | grep Darwin`
 if [ -z "$OUT_TARGET_HOST" ]
@@ -21,7 +19,7 @@ else
 fi
 
 if [ -z "$OUT" -o ! -d "$OUT" ]; then
-	echo -e ${red}"ERROR: $0 only works with a full build environment. $OUT should exist."${txtrst}
+	echo "ERROR: $0 only works with a full build environment. $OUT should exist."
 	exit 1
 fi
 
@@ -33,27 +31,28 @@ else
     OTAPACKAGE=$OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$USER.zip
 fi
 if [ ! -f "$OTAPACKAGE" ]; then
-	echo -e ${red}"$OTAPACKAGE doesn't exist!"${txtrst};
+	echo "$OTAPACKAGE doesn't exist!";
 	exit 1
 fi
 
-OPTICHARGER=$ANDROID_BUILD_TOP/vendor/pac/tools/opticharger
+OPTICHARGER=$ANDROID_BUILD_TOP/vendor/probam/tools/opticharger
 QUIET=-q
 DELETE_BINS="applypatch applypatch_static check_prereq recovery updater"
 
 REPACK=$OUT/repack.d
-echo -e ${bldcya}"Sanitizing environment..."${txtrst}
+printf "Sanitizing environment..."
 rm -rf $REPACK
 mkdir -p $REPACK
+echo
 
 
 # Unpack the otapackage and opticharge all apks
 mkdir $REPACK/ota
 (
 cd $REPACK/ota
-echo -e ${bldgrn}"Unpacking${txtrst}: ${grn}$OTAPACKAGE..."${txtrst}
+printf "Unpacking $OTAPACKAGE..."
 unzip $QUIET $OTAPACKAGE
-echo -e ""
+echo
 cd $REPACK/ota/system/framework
 $OPTICHARGER framework-res.apk
 cd $REPACK/ota/system/app
@@ -66,16 +65,16 @@ $SED -i \
 	-e '/ro\.build\.type/s/eng/user/' \
 	$REPACK/ota/system/build.prop
 
-# Delete PAC specific files
-if [ -f $ANDROID_BUILD_TOP/vendor/pac/tools/squisher.rm ]; then
-	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/pac/tools/squisher.rm`; do
+# Delete ProBam specific files
+if [ -f $ANDROID_BUILD_TOP/vendor/probam/tools/squisher.rm ]; then
+	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/probam/tools/squisher.rm`; do
 		rm -f $REPACK/ota/$RM_FILE
 	done
 fi
 
 # Delete target product specific files
-if [ -f $ANDROID_BUILD_TOP/vendor/pac/tools/$TARGET_PRODUCT-squisher.rm ]; then
-	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/pac/tools/$TARGET_PRODUCT-squisher.rm`; do
+if [ -f $ANDROID_BUILD_TOP/vendor/probam/tools/$TARGET_PRODUCT-squisher.rm ]; then
+	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/probam/tools/$TARGET_PRODUCT-squisher.rm`; do
 		rm -f $REPACK/ota/$RM_FILE
 	done
 fi
@@ -91,62 +90,48 @@ rm -rf $REPACK/ota/recovery
 	find $REPACK/ota/system/lib/modules -name "*.ko" -print0 | xargs -0 arm-eabi-strip --strip-unneeded
 
 # Determine what to name the new signed package
-if [ -z "$CYANOGEN_NIGHTLY" ]; then
-	PACVERSION=`grep 'ro.pacrom.version=' $REPACK/ota/system/build.prop | sed -e 's/ro.pacrom.version=//g'`
-	OUTFILE=$OUT/$PACVERSION.zip
-	echo -e ""; echo -e "${bldgrn}P${bldppl}A${bldblu}C${bldylw}-VERSION${txtrst}:${cya} $PACVERSION"${txtrst}; echo -e ""
-else
-	OUTFILE=$OUT/update-squished.zip
-fi
+PROBAMVERSION=`grep 'ro.probam.version=' $REPACK/ota/system/build.prop | sed -e 's/ro.probam.version=//g'`
+OVERLAYTARGET=`grep 'ro.pa.family=' $REPACK/ota/system/build.prop | sed -e 's/ro.pa.family=//g'`
+FILESTRING=`grep 'ro.probamrom.version=' $REPACK/ota/system/build.prop | sed -e 's/ro.probamrom.version=//g'`
+OUTFILE=$OUT/$FILESTRING.zip
+echo PROBAMVERSION: $PROBAMVERSION
+
+# Copy ParanoidPreferences overlays
+printf "Copying overlay preferences for $OVERLAYTARGET..."
+echo
+mkdir $REPACK/ota/system/etc/paranoid/preferences
+mkdir $REPACK/ota/system/etc/paranoid/preferences/images
+cp -r $ANDROID_BUILD_TOP/vendor/pa/prebuilt/preferences/images/* $REPACK/ota/system/etc/paranoid/preferences/images/
+cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/bootanimation/$OVERLAYTARGET/bootanimation.zip $REPACK/ota/system/media/bootanimation.zip
+cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/pa/preferences/$OVERLAYTARGET/* $REPACK/ota/system/etc/paranoid/preferences/
+cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/apk/* $REPACK/ota/system/app/
+cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/gapps/* $REPACK/ota/system/
+cp -r -f $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/xbin/* $REPACK/ota/system/xbin/
 
 # Pack it up and sign
-echo -e ${grn}"Zipping package..."${txtrst}
+printf "Zipping package..."
 ( cd $REPACK/ota; zip $QUIET -r $REPACK/update.zip . )
-echo -e ${grn}"Signing package..."${txtrst}
+echo
+printf "Signing package..."
 SECURITYDIR=$ANDROID_BUILD_TOP/build/target/product/security
 java -Xmx1024m \
 	-jar $ANDROID_BUILD_TOP/out/host/$OUT_TARGET_HOST/framework/signapk.jar \
 	-w $SECURITYDIR/testkey.x509.pem $SECURITYDIR/testkey.pk8 \
 	$REPACK/update.zip $OUTFILE
-echo -e ${grn}"Cleaning up..."${txtrst}
+echo
+printf "Cleaning up..."
 rm -rf $REPACK
+echo
 
 # Create a md5 checksum image of the repacked package
 (
 img=`basename $OUTFILE`
 cd `dirname $OUTFILE`
 $MD5 $img >$img.md5sum
-ZIPSIZE=`ls -lah $OUTFILE | awk '{ print $5}'`
-echo -e ""; echo -e ${bldgrn}"Package complete:"${txtrst}
-echo -e ${cya}"ZIP:${ylw}  $img"${txtrst}
-echo -e ${cya}"MD5: ${ylw} `cat $img.md5sum | awk '{print $1}'`"${txtrst}
-echo -e ${cya}"SIZE:${ylw} $ZIPSIZE"${txtrst}
-MD5VAL=`cat $img.md5sum  | awk '{ print $1 }'`
-DEVICE=`echo -e $TARGET_PRODUCT | cut -d "_" -f 2`
-
-echo -e ""
-echo -e ${bldylw}"    dMMMMb  .aMMMb  .aMMMb  dMMMMMMMMb .aMMMb  dMMMMb"
-echo -e "   dMP.dMP dMP\"dMP dMP\"VMP dMP\"dMP\"dMPdMP\"dMP dMP dMP"
-echo -e "  dMMMMP\" dMMMMMP dMP     dMP dMP dMPdMMMMMP dMP dMP"
-echo -e " dMP     dMP dMP dMP.aMP dMP dMP dMPdMP dMP dMP dMP"
-echo -e "dMP     dMP dMP  VMMMP\" dMP dMP dMPdMP dMP dMP dMP"
-echo -e
-echo -e "    dMMMMb  .aMMMb  dMMMMMMMMb  .dMMMb"
-echo -e "   dMP.dMP dMP\"dMP dMP\"dMP\"dMP dMP\" VP"
-echo -e "  dMMMMK\" dMP dMP dMP dMP dMP  VMMMb"
-echo -e " dMP\"AMF dMP.aMP dMP dMP dMP dP .dMP"
-echo -e "dMP dMP  VMMMP\" dMP dMP dMP  VMMMP\""${txtrst}
-echo -e ""
-
-#OTA link for ease of use !
-echo -e "Use this link in a browser after uploading the zip to your required host."
-echo -e "If you do not know the password ask in the normal places."
-echo -e ${ylwrev}"                                   LINK                                         "${txtrst}
-echo -e ${cya}"http://pac-rom.com/ota/?device=$DEVICE&version=$PACVERSION&md5=$MD5VAL"${txtrst}
-echo -e ${ylwrev}"                                 END LINK                                       "${txtrst}
-echo -e "Make sure you use a direct linkable host, got problems"
-echo -e "with the OTA? Contact ${txtbld}pvyParts${txtrst} in hangouts."
-echo -e ""
+echo
+echo "Package complete: $OUTFILE"
+cat $img.md5sum
+echo
 )
 
 exit 0
