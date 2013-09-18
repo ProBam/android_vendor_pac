@@ -106,7 +106,7 @@ cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/bootanimation/$OVERLAYTAR
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/pa/preferences/$OVERLAYTARGET/* $REPACK/ota/system/etc/paranoid/preferences/
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/apk/* $REPACK/ota/system/app/
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/gapps/* $REPACK/ota/system/
-cp -r -f $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/xbin/* $REPACK/ota/system/xbin/
+cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/lib/* $REPACK/ota/system/lib/
 
 # Pack it up and sign
 printf "Zipping package..."
