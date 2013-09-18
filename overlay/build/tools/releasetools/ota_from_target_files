@@ -416,12 +416,12 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.FormatPartition("/data")
 
   script.Print("#####################################");
-  script.Print("#______         ______      ___  ___#")
-  script.Print("#| ___ \        | ___ \     |  \/  |#")
-  script.Print("#| |_/ / __ ___ | |_/ / __ _| .  . |#")
-  script.Print("#|  __/ '__/ _ \| ___ \/ _` | |\/| |#")
-  script.Print("#| |  | | | (_) | |_/ / (_| | |  | |#")
-  script.Print("#\_|  |_|  \___/\____/ \__,_\_|  |_/#")
+  script.Print("#______         ______      ___  ___#");
+  script.Print("#| ___ \        | ___ \     |  \/  |#");
+  script.Print("#| |_/ / __ ___ | |_/ / __ _| .  . |#");
+  script.Print("#|  __/ '__/ _ \| ___ \/ _` | |\/| |#");
+  script.Print("#| |  | | | (_) | |_/ / (_| | |  | |#");
+  script.Print("#\_|  |_|  \___/\____/ \__,_\_|  |_/#");
   script.Print("#                                   #");
   script.Print("#                                   #");
   script.Print("# WebSite: www.probam.net           #");
