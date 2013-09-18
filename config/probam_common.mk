@@ -19,9 +19,7 @@ PRODUCT_COPY_FILES += \
   vendor/probam/prebuilt/common/bin/backuptool.functions:system/bin/backuptool.functions \
   vendor/probam/prebuilt/common/bin/50-backupScript.sh:system/addon.d/50-backupScript.sh  \
   vendor/probam/prebuilt/common/bin/70-gapps.sh:system/addon.d/70-gapps.sh \
-  vendor/probam/prebuilt/common/bin/71-gapps-faceunlock.sh:system/addon.d/71-gapps-faceunlock.sh \
-  vendor/probam/prebuilt/common/xbin/su:system/xbin/su \
-  vendor/probam/prebuilt/common/bin/99SuperSUDaemon:system/etc/init.d/99SuperSUDaemon
+  vendor/probam/prebuilt/common/bin/71-gapps-faceunlock.sh:system/addon.d/71-gapps-faceunlock.sh 
 
 # T-Mobile theme engine
   include vendor/probam/config/themes_common.mk
