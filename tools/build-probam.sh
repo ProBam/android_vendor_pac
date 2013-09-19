@@ -62,6 +62,10 @@ if [ "$#" -ne 1 ]; then
 fi
 device="$1"
 
+# before start we clean the dependencies to avoid conflicts
+rm -f .repo/local_manifest.xml
+rm -f .repo/local_manifests/roomservice.xml
+
 # get current version
 eval $(grep "^PROBAM_VERSION_" vendor/probam/config/probam_common.mk | sed 's/ *//g')
 VERSION="$PROBAM_VERSION_MAJOR.$PROBAM_VERSION_MINOR.$PROBAM_VERSION_MAINTENANCE"
