@@ -430,7 +430,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.Print("# --Details------------------------ #");
   script.Print("#                                   #");
   probamv = GetBuildProp("ro.probam.version", OPTIONS.info_dict)
-  script.Print("# Version: %s"%(probamv);
+  script.Print("# Version: %s"%(probamv));
   device = GetBuildProp("ro.product.device", OPTIONS.info_dict)
   model = GetBuildProp("ro.product.model", OPTIONS.info_dict)
   script.Print("# Device: %s (%s)"%(model, device));
