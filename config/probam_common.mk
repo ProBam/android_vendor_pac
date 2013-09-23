@@ -56,7 +56,8 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/probam/overlay/probam/common
 
 # ProBam Packages
 PRODUCT_PACKAGES += \
-  ProBamStats 
+  ProBamStats \
+  Focal
   
 ### PARANOID ###
 # PARANOID Packages
