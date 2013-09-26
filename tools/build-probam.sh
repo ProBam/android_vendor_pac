@@ -11,6 +11,7 @@ usage()
 	echo -e "    -d  Use dex optimizations"
 	echo -e "    -j# Set jobs"
 	echo -e "    -s  Sync before build"
+	echo -e "    -g  extra Gapps Version for Goo.im"
 	echo -e ""
 	echo -e ${txtbld}"  Example:"${txtrst}
 	echo -e "    ./build-probam.sh -c mako"
@@ -46,13 +47,15 @@ opt_clean=0
 opt_dex=0
 opt_jobs="$CPUS"
 opt_sync=0
+opt_gapps=0
 
-while getopts "cdj:s" opt; do
+while getopts "cdj:sg" opt; do
 	case "$opt" in
 	c) opt_clean=1 ;;
 	d) opt_dex=1 ;;
 	j) opt_jobs="$OPTARG" ;;
 	s) opt_sync=1 ;;
+	g) opt_gapps=1 ;;
 	*) usage
 	esac
 done
@@ -127,6 +130,14 @@ echo -e ""
 
 # squisher
 vendor/probam/tools/squisher
+
+echo -e ""
+
+# gapps
+if [ "$opt_gapps" -ne 0 ]; then
+        vendor/probam/tools/squisherg
+fi
+
 
 # cleanup unused built
 rm -f out/target/product/$device/cm-*.*

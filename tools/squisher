@@ -105,7 +105,6 @@ cp -r $ANDROID_BUILD_TOP/vendor/pa/prebuilt/preferences/images/* $REPACK/ota/sys
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/bootanimation/$OVERLAYTARGET/bootanimation.zip $REPACK/ota/system/media/bootanimation.zip
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/pa/preferences/$OVERLAYTARGET/* $REPACK/ota/system/etc/paranoid/preferences/
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/apk/* $REPACK/ota/system/app/
-cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/gapps/* $REPACK/ota/system/
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/lib/* $REPACK/ota/system/lib/
 
 # Pack it up and sign

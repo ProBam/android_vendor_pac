@@ -17,9 +17,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
   vendor/probam/prebuilt/common/bin/backuptool.sh:system/bin/backuptool.sh \
   vendor/probam/prebuilt/common/bin/backuptool.functions:system/bin/backuptool.functions \
-  vendor/probam/prebuilt/common/bin/50-backupScript.sh:system/addon.d/50-backupScript.sh  \
-  vendor/probam/prebuilt/common/bin/70-gapps.sh:system/addon.d/70-gapps.sh \
-  vendor/probam/prebuilt/common/bin/71-gapps-faceunlock.sh:system/addon.d/71-gapps-faceunlock.sh 
+  vendor/probam/prebuilt/common/bin/50-backupScript.sh:system/addon.d/50-backupScript.sh
 
 # T-Mobile theme engine
   include vendor/probam/config/themes_common.mk
@@ -92,14 +90,14 @@ CM_BUILD := $(BOARD)
 PA_VERSION_MAJOR = 3
 PA_VERSION_MINOR = 9
 PA_VERSION_MAINTENANCE = 9.1
-PA_PREF_REVISION = 1
+PA_PREF_REVISION = 2
 VERSION := $(PA_VERSION_MAJOR).$(PA_VERSION_MINOR)$(PA_VERSION_MAINTENANCE)
 PA_VERSION := pa_$(BOARD)-$(VERSION)
 
 # PROBAM version
 PROBAM_VERSION_MAJOR = 4
 PROBAM_VERSION_MINOR = 4
-PROBAM_VERSION_MAINTENANCE = 6
+PROBAM_VERSION_MAINTENANCE = 7
 PROBAM_VERSION := $(PROBAM_VERSION_MAJOR).$(PROBAM_VERSION_MINOR).$(PROBAM_VERSION_MAINTENANCE)
 
 # PAC version
@@ -117,7 +115,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.pa.family=$(PA_CONF_SOURCE) \
   ro.pa.version=$(VERSION) \
   ro.papref.revision=$(PA_PREF_REVISION) \
-  ro.aokp.version=$(BOARD)_jb-mr1_milestone-2
+  ro.aokp.version=$(BOARD)_jb-mr2
 
 # Setup OTA with goo.im
 PRODUCT_PROPERTY_OVERRIDES += \
