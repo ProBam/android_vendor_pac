@@ -96,6 +96,32 @@ FILESTRING=`grep 'ro.probamrom.version=' $REPACK/ota/system/build.prop | sed -e 
 OUTFILE=$OUT/$FILESTRING.zip
 echo PROBAMVERSION: $PROBAMVERSION
 
+# Get GAPPS
+wget .quiet 'http://goo.im/json2&path=/devs/paranoidandroid/roms/gapps&query=pa_gapps' -O $REPACK/goo.json
+NEWESTGAPPS=`cat $REPACK/goo.json | grep -P -o -e 'pa_gapps.*?.zip' -m 1 | head -1`
+
+echo
+printf "Fetching latest GAPPS..."
+echo
+(
+if [ -f $ANDROID_BUILD_TOP/gapps/$NEWESTGAPPS ];
+then
+    echo "Gapps package $NEWESTGAPPS found"
+    echo
+else
+    echo "Gapps package $NEWESTGAPPS not found, trying to download ..."
+    echo
+    rm -rf $ANDROID_BUILD_TOP/gapps
+    mkdir -p $ANDROID_BUILD_TOP/gapps
+    cd $ANDROID_BUILD_TOP/gapps
+    wget "http://goo.im/devs/paranoidandroid/roms/gapps/$NEWESTGAPPS"
+    unzip -qq $ANDROID_BUILD_TOP/gapps/$NEWESTGAPPS
+    rm -rf META-INF/ install-optional.sh
+    cp -r optional/face/* $ANDROID_BUILD_TOP/gapps/system/
+    rm -rf optional/
+fi
+)
+
 # Copy ParanoidPreferences overlays
 printf "Copying overlay preferences for $OVERLAYTARGET..."
 echo
@@ -105,6 +131,7 @@ cp -r $ANDROID_BUILD_TOP/vendor/pa/prebuilt/preferences/images/* $REPACK/ota/sys
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/bootanimation/$OVERLAYTARGET/bootanimation.zip $REPACK/ota/system/media/bootanimation.zip
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/pa/preferences/$OVERLAYTARGET/* $REPACK/ota/system/etc/paranoid/preferences/
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/apk/* $REPACK/ota/system/app/
+cp -r $ANDROID_BUILD_TOP/gapps/system/* $REPACK/ota/system/
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/lib/* $REPACK/ota/system/lib/
 
 # Pack it up and sign
