@@ -97,7 +97,7 @@ OUTFILE=$OUT/$FILESTRING.zip
 echo PROBAMVERSION: $PROBAMVERSION
 
 # Get GAPPS
-wget .quiet 'http://goo.im/json2&path=/devs/paranoidandroid/roms/gapps&query=pa_gapps' -O $REPACK/goo.json
+wget 'http://goo.im/json2&path=/devs/paranoidandroid/roms/gapps&query=pa_gapps' -O $REPACK/goo.json
 NEWESTGAPPS=`cat $REPACK/goo.json | grep -P -o -e 'pa_gapps.*?.zip' -m 1 | head -1`
 
 echo
@@ -132,7 +132,6 @@ cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/bootanimation/$OVERLAYTAR
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/pa/preferences/$OVERLAYTARGET/* $REPACK/ota/system/etc/paranoid/preferences/
 cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/apk/* $REPACK/ota/system/app/
 cp -r $ANDROID_BUILD_TOP/gapps/system/* $REPACK/ota/system/
-cp -r $ANDROID_BUILD_TOP/vendor/probam/prebuilt/common/lib/* $REPACK/ota/system/lib/
 
 # Pack it up and sign
 printf "Zipping package..."

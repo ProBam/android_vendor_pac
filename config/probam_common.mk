@@ -55,7 +55,8 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/probam/overlay/probam/common
 # ProBam Packages
 PRODUCT_PACKAGES += \
   ProBamStats \
-  Focal
+  Focal \
+  ProbamUpdater
   
 ### PARANOID ###
 # PARANOID Packages
@@ -109,6 +110,7 @@ PAC_VERSION := $(PAC_VERSION_MAJOR).$(PAC_VERSION_MINOR).$(PAC_VERSION_MAINTENAN
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.probam.version=$(PROBAM_VERSION) \
   ro.probamrom.version=probam_v$(PROBAM_VERSION)_$(BOARD) \
+  ro.timestamp=$(shell date -u +%Y%m%d) \
   ro.pac.version=$(PAC_VERSION) \
   ro.pacrom.version=pac_$(BOARD)_4.3-$(PAC_VERSION) \
   ro.modversion=$(PA_VERSION) \
@@ -117,12 +119,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.papref.revision=$(PA_PREF_REVISION) \
   ro.aokp.version=$(BOARD)_jb-mr2
 
-# Setup OTA with goo.im
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.goo.developerid=probam \
-  ro.goo.rom=probam \
-  ro.goo.version=$(PROBAM_VERSION_MAJOR)$(PROBAM_VERSION_MINOR)$(PROBAM_VERSION_MAINTENANCE)
-
 # ROMStats Properties
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.probamstats.url=http://stats.codexc.com \
@@ -130,16 +126,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.probamstats.version=$(PROBAM_VERSION) \
   ro.probamstats.tframe=1
 
-# Update Me Properties
-PRODUCT_PROPERTY_OVERRIDES += \
-  updateme.name=ProBam \
-  updateme.version=$(PROBAM_VERSION) \
-  updateme.urlcheck=http://www.probam.net/xml/$(BOARD)/update_me_ckeck.xml \
-  updateme.urlelement=http://www.probam.net/romdownloads/ \
-  updateme.reboottype=1 \
-  updateme.disableinstalledapps=1 \
-  updateme.disablescripts=1
-  
 # ProBam Tweaks
 ADDITIONAL_DEFAULT_PROPERTIES += \
   ro.config.hw_quickpoweron=true \
