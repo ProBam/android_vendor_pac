@@ -61,7 +61,13 @@ case "$1" in
     run_stage post-restore
     restore_addon_d
     rm -rf $C
-    rm -rf /data/data/android.pacstats
+    rm -rf /data/data/android.probamstats
+    rm -rf /system/app/OTAPlatform.apk
+    rm -rf /system/app/UpdateMe.apk
+    rm -rf /data/dalvik-cache/*com.beerbong.otaplatform*
+    rm -rf /data/dalvik-cache/*com.acquariusoft.UpdateMe*
+    rm -rf /data/app/com.acquariusoft.UpdateMe-*
+    rm -rf /data/app/com.beerbong.otaplatform*-*
     sync
   ;;
   *)
