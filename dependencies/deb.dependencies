@@ -1,5 +1,11 @@
 [
     {
+        "account":      "CyanogenMod",
+        "repository":   "android_device_asus_deb",
+        "target_path":  "device/asus/deb",
+        "revision":     "cm-10.2"
+    },
+    {
         "account":      "zaclimon",
         "repository":   "android_device_asus_flo",
         "target_path":  "device/asus/flo",

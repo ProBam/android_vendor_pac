@@ -25,8 +25,8 @@
     },
     {
         "account":      "Herna1994",
-        "repository":   "android_hardware_qcom_media-legacy",
-        "target_path":  "hardware/qcom/media-legacy",
-        "revision":     "cm10.2"
-    }
+        "repository":   "kernel_u8800pro",
+        "target_path":  "kernel/honor",
+        "revision":     "bcm4329"
+    },
 ]

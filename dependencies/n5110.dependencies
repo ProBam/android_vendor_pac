@@ -6,9 +6,9 @@
     "revision":     "cm-10.2"
     },
   {
-    "account":      "Team-Hydra",
-    "repository":   "android_device_samsung_d710",
-    "target_path":  "device/samsung/d710",
+    "account":      "iurnait",
+    "repository":   "android_device_samsung_n5110",
+    "target_path":  "device/samsung/n5110",
     "revision":     "cm-10.2"
   },
    {
@@ -19,20 +19,20 @@
   },
   {
     "account":      "CyanogenMod",
-    "repository":   "android_device_samsung_galaxys2-common",
-    "target_path":  "device/samsung/galaxys2-common",
-    "revision":     "cm-10.2"
-  },
-  {
-    "account":      "CyanogenMod",
     "repository":   "android_hardware_samsung",
     "target_path":  "hardware/samsung",
     "revision":     "cm-10.2"
   },
   {
     "account":      "CyanogenMod",
-    "repository":   "android_kernel_samsung_smdk4412",
-    "target_path":  "kernel/samsung/smdk4412",
+    "repository":   "android_device_samsung_smdk4412-common",
+    "target_path":  "device/samsung/smdk4412-common",
+    "revision":     "cm-10.2"
+  },
+  {
+    "account":      "iurnait",
+    "repository":   "android_kernel_samsung_n5110",
+    "target_path":  "kernel/samsung/n5110",
     "revision":     "cm-10.2"
   }
 ]

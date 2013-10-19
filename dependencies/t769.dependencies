@@ -4,11 +4,11 @@
     "repository":   "proprietary_vendor_samsung",
     "target_path":  "vendor/samsung",
     "revision":     "cm-10.2"
-  },
+    },
   {
     "account":    "CyanogenMod",
-    "repository": "android_device_samsung_exhilarate",
-    "target_path": "device/samsung/exhilarate",
+    "repository": "android_device_samsung_t769",
+    "target_path": "device/samsung/t769",
     "revision":    "cm-10.2"
   },
   {
@@ -36,3 +36,4 @@
     "revision":    "cm-10.2"
   }
 ]
+
