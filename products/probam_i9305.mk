@@ -8,7 +8,7 @@ OVERLAY_TARGET := pa_xhdpi
 PRODUCT_PACKAGE_OVERLAYS += vendor/probam/overlay/aokp/device/i9305
 
 # include ProBam common configuration
-include vendor/probam/config/probam_common.mk
+include vendor/probam/config/pac_common.mk
 
 # Inherit CM device configuration
 $(call inherit-product, device/samsung/i9305/cm.mk)
