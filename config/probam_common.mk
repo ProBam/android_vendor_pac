@@ -135,4 +135,5 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 # Disable ADB authentication and set root access to Apps and ADB
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.adb.secure=0 \
-    persist.sys.root_access=3
+    persist.sys.root_access=3 \
+    persist.service.adb.enable=1
